@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Encriptacion vigenere</h1>
+    <label for="mensaje">Digite el mensaje</label>
+    <input type="text" id="mensaje">
+    <br>
+    <label for="llave">Digite la llave</label>
+    <input type="text" id="llave">
+    <br>
+    <button type="button" onclick="mostrar()">Encriptar</button>
+    <p id="respuesta"></p>
+
+    <script>
+        function vigenere(mensaje, llave) {
+            let alfabeto = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            var encrip = "";
+            var llaveIndex = 0;
+
+            for (let i = 0; i < mensaje.length; i++) {
+                var caracteres = mensaje.charAt(i).toUpperCase();
+                var llaveCaracter = llave.charAt(llaveIndex).toUpperCase();
+
+                // Busca la posición del carácter en el alfabeto
+                var IndiceCaracter = alfabeto.indexOf(caracteres);
+                if (IndiceCaracter === -1) {
+                    // Si no se encuentra el carácter en el alfabeto, lo añade al mensaje cifrado sin cambiarlo
+                    encrip += caracteres;
+                } else {
+                    // Busca la posición del carácter clave en el alfabeto
+                     llaveIndex = alfabeto.indexOf(llaveCaracter);
+
+                    // Calcula la posición del carácter cifrado
+                    var newIndex = (IndiceCaracter + llaveIndex) % 26;
+
+                    // Añade el carácter cifrado al mensaje cifrado
+                    encrip += alfabeto.charAt(newIndex);
+
+                    // Actualiza el índice de la clave para el siguiente carácter
+                    keyIndex = (llaveIndex + 1) % llave.length;
+                }
+            }
+
+            return encrip;
+        }
+        function mostrar(){
+
+            var message = document.getElementById("mensaje").value;
+            var key = document.getElementById("llave").value;
+            
+            var encryptedMessage = vigenere(message, key);
+            
+            document.getElementById("respuesta").innerHTML=encryptedMessage;
+        }
+        
+
+    </script>
+</body>
+
+</html>
